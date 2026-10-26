@@ -27,7 +27,7 @@ If you prefer to host this on your own VPS (like Google Cloud Platform), you can
 
 ```bash
 # Clone the repository
-git clone [https://github.com/yourusername/webhook-relay-server.git](https://github.com/yourusername/webhook-relay-server.git)
+git clone [https://github.com/oluibk2020/webhook-relay-server.git](https://github.com/oluibk2020/webhook-relay-server.git)
 cd webhook-relay-server
 
 # Install dependencies
