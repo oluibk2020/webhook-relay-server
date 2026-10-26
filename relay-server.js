@@ -14,21 +14,22 @@ const wss = new WebSocketServer({ server });
 const channels = new Map();
 
 wss.on('connection', (ws, req) => {
-    // Parse the channel from the connection URL (e.g., ?channel=my-app)
-    const parameters = url.parse(req.url, true);
-    const channel = parameters.query.channel || 'default';
+  // Use the modern WHATWG URL API to parse the channel safely
+  const baseURL = `http://${req.headers.host || "localhost"}`;
+  const requestUrl = new URL(req.url, baseURL);
+  const channel = requestUrl.searchParams.get("channel") || "default";
 
-    if (!channels.has(channel)) {
-        channels.set(channel, new Set());
-    }
-    channels.get(channel).add(ws);
-    console.log(`Client connected to channel: ${channel}`);
-    
-    ws.on('close', () => {
-        channels.get(channel).delete(ws);
-        if (channels.get(channel).size === 0) channels.delete(channel);
-        console.log(`Client disconnected from channel: ${channel}`);
-    });
+  if (!channels.has(channel)) {
+    channels.set(channel, new Set());
+  }
+  channels.get(channel).add(ws);
+  console.log(`Client connected to channel: ${channel}`);
+
+  ws.on("close", () => {
+    channels.get(channel).delete(ws);
+    if (channels.get(channel).size === 0) channels.delete(channel);
+    console.log(`Client disconnected from channel: ${channel}`);
+  });
 });
 
 // The public endpoint that payment gateways send POST requests to
