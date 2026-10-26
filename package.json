@@ -1,0 +1,13 @@
+{
+  "name": "webhook-relay-server",
+  "version": "1.0.0",
+  "description": "Cloud relay server for local-webhook-relay CLI",
+  "main": "relay-server.js",
+  "scripts": {
+    "start": "node relay-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  }
+}
